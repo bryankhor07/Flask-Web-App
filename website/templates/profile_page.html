@@ -11,6 +11,13 @@ content %}
       </p>
       <p class="card-text"><strong>Last Name:</strong> {{ user.last_name }}</p>
       <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+      <button
+        type="button"
+        class="btn btn-danger"
+        onClick="deleteAccount({{ user.id }})"
+      >
+        Delete Account
+      </button>
     </div>
   </div>
 </div>
