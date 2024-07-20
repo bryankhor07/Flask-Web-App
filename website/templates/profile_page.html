@@ -1,23 +1,36 @@
 {% extends "base.html" %} {% block title %}Profile Page{% endblock %} {% block
 content %}
-<h1 align="center">{{ user.first_name }}</h1>
+<h1 align="center">User Information</h1>
 <div class="container mt-4">
   <div class="card" style="border-radius: 10px">
     <div class="card-body">
-      <h5 class="card-title">User Information</h5>
-      <p class="card-text"><strong>ID:</strong> {{ user.id }}</p>
-      <p class="card-text">
-        <strong>First Name:</strong> {{ user.first_name }}
-      </p>
-      <p class="card-text"><strong>Last Name:</strong> {{ user.last_name }}</p>
-      <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
-      <button
-        type="button"
-        class="btn btn-danger"
-        onClick="deleteAccount({{ user.id }})"
-      >
-        Delete Account
-      </button>
+      <div class="d-flex align-items-center">
+        <div class="mr-4">
+          <img
+            src="{{ user.profile_picture }}"
+            alt="Profile Picture"
+            class="img-fluid rounded-circle"
+            style="max-width: 150px"
+          />
+        </div>
+        <div>
+          <p class="card-text"><strong>ID:</strong> {{ user.id }}</p>
+          <p class="card-text">
+            <strong>First Name:</strong> {{ user.first_name }}
+          </p>
+          <p class="card-text">
+            <strong>Last Name:</strong> {{ user.last_name }}
+          </p>
+          <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+          <button
+            type="button"
+            class="btn btn-danger"
+            onClick="deleteAccount({{ user.id }})"
+          >
+            Delete Account
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
