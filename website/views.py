@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Note
+from .models import Note, User
 from . import db
 import json
 
@@ -32,3 +32,15 @@ def delete_note():
             db.session.commit()
 
     return jsonify({}) # Returns an empty JSON object
+
+@views.route('/delete-account', methods=['POST'])
+@login_required
+def delete_account():
+    data = request.get_json()
+    userId = data.get('userId')
+    user = User.query.get(userId)
+    if user and user.id == current_user.id:
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({"message": "Account deleted"}), 200
+    return jsonify({"error": "Unauthorized or user not found"}), 403
