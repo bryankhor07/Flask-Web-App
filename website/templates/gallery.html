@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% block title %}Gallery{% endblock %} {% block
+content %}
+<h1 align="center">Gallery</h1>
+<form method="POST" enctype="multipart/form-data" class="mb-4">
+  <div class="form-group">
+    <label for="image">Image</label>
+    <input
+      type="file"
+      class="form-control"
+      id="image"
+      name="image"
+      accept="image/*"
+    />
+  </div>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      name="name"
+      placeholder="Enter name"
+    />
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea
+      class="form-control"
+      id="description"
+      name="description"
+      placeholder="Enter description"
+    ></textarea>
+  </div>
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Upload Image</button>
+  </div>
+</form>
+<div class="container">
+  <div class="row">
+    {% for image in user.images %}
+    <div class="col-md-4">
+      <div class="card mb-4" style="transition: background-color 0.3s">
+        <img
+          src="{{ image.image }}"
+          class="card-img-top"
+          alt="{{ image.name }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ image.name }}</h5>
+          <p class="card-text">{{ image.description }}</p>
+          <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .card:hover {
+    background-color: lightgray;
+  }
+</style>
+{% endblock %}

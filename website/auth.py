@@ -1,6 +1,6 @@
 import os
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User
+from .models import User, Image
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from . import db
@@ -9,6 +9,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 auth = Blueprint('auth', __name__)
 
 UPLOAD_FOLDER = 'website/static/profile_pics'
+GALLERY_FOLDER = 'website/static/gallery_images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
@@ -81,3 +82,24 @@ def sign_up():
 @auth.route('/profile-page')
 def profile_page():
     return render_template("profile_page.html", user=current_user)
+
+@auth.route('/gallery', methods=['GET', 'POST'])
+def gallery():
+    if request.method == 'POST':
+        image = request.files['image']
+        name = request.form.get('name')
+        description = request.form.get('description')
+
+        if image and allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(GALLERY_FOLDER, filename))
+            image_path = f'static/gallery_images/{filename}'
+        else:
+            image_path = None
+
+        new_image = Image(image=image_path, name=name, description=description, user_id=current_user.id)
+        db.session.add(new_image)
+        db.session.commit()
+        flash("Image uploaded.", category='success')
+        return redirect(url_for('auth.gallery'))
+    return render_template("gallery.html", user=current_user)
