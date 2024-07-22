@@ -7,6 +7,23 @@ function deleteNote(noteId) {
   });
 }
 
+function deleteImage(imageId) {
+  fetch("/delete-image", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": "{{ csrf_token() }}", // Include CSRF token if using Flask-WTF
+    },
+    body: JSON.stringify({ imageId: imageId }),
+  }).then((response) => {
+    if (response.ok) {
+      window.location.href = "/gallery";
+    } else {
+      alert("Failed to delete account");
+    }
+  });
+}
+
 function deleteAccount(userId) {
   fetch("/delete-account", {
     method: "POST",

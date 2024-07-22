@@ -48,7 +48,13 @@ content %}
         <div class="card-body">
           <h5 class="card-title">{{ image.name }}</h5>
           <p class="card-text">{{ image.description }}</p>
-          <button type="button" class="btn btn-danger">Delete</button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            onClick="deleteImage({{ image.id }})"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>
