@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Note, User, Image
+from .models import Note, User, Image, Task
 from . import db
 import json
 
@@ -56,3 +56,14 @@ def delete_account():
         db.session.commit()
         return jsonify({"message": "Account deleted"}), 200
     return jsonify({"error": "Unauthorized or user not found"}), 403
+
+@views.route('/delete-task', methods=['POST'])
+def delete_task():
+    task = json.loads(request.data)
+    taskId = task['taskId']
+    task = Task.query.get(taskId)
+    if task:
+        if task.user_id == current_user.id:
+            db.session.delete(task)
+            db.session.commit()
+    return jsonify({})

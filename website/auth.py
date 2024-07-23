@@ -1,6 +1,6 @@
 import os
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User, Image
+from .models import User, Image, Task
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from . import db
@@ -103,3 +103,19 @@ def gallery():
         flash("Image uploaded.", category='success')
         return redirect(url_for('auth.gallery'))
     return render_template("gallery.html", user=current_user)
+
+@auth.route('/tasks', methods=['GET', 'POST'])
+@login_required
+def tasks():
+    if request.method == 'POST':
+        task = request.form.get('task')
+        category = request.form.get('category')
+
+        if len(task) < 1:
+            flash('Task is too short!', category='error')
+        else:
+            new_task = Task(data=task, category=category, user_id=current_user.id)
+            db.session.add(new_task)
+            db.session.commit()
+            flash('Task added!', category='success')
+    return render_template("tasks.html", user=current_user)

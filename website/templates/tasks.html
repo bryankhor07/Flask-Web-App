@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block title %}To-Do List{% endblock %} {% block
+content %}
+<h1 align="center">To-Do List</h1>
+<form method="POST">
+  <textarea
+    name="task"
+    id="task"
+    class="form-control"
+    placeholder="Enter your task"
+  ></textarea>
+  <br />
+  <select name="category" id="category" class="form-control">
+    <option value="Critical">Critical</option>
+    <option value="Moderate">Moderate</option>
+    <option value="Trivial">Trivial</option>
+  </select>
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Add Task</button>
+  </div>
+</form>
+<br />
+<h2 class="mt-4">Critical</h2>
+<ul
+  class="list-group list-group-flush border border-danger"
+  id="critical-tasks"
+>
+  {% for task in user.tasks if task.category == 'Critical' %}
+  <li class="list-group-item mb-4 bg-danger">
+    {{ task.data }}
+    <button type="button" class="close" onClick="deleteTask({{ task.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+<h2 class="mt-4">Moderate</h2>
+<ul
+  class="list-group list-group-flush border border-warning"
+  id="moderate-tasks"
+>
+  {% for task in user.tasks if task.category == 'Moderate' %}
+  <li class="list-group-item mb-4 bg-warning">
+    {{ task.data }}
+    <button type="button" class="close" onClick="deleteTask({{ task.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+<h2 class="mt-4">Trivial</h2>
+<ul
+  class="list-group list-group-flush border border-success"
+  id="trivial-tasks"
+>
+  {% for task in user.tasks if task.category == 'Trivial' %}
+  <li class="list-group-item mb-4 bg-success">
+    {{ task.data }}
+    <button type="button" class="close" onClick="deleteTask({{ task.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
