@@ -1,0 +1,20 @@
+.weather-result {
+  background-color: #f0f8ff;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.weather-result h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.weather-result p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #555;
+}

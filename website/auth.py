@@ -119,3 +119,7 @@ def tasks():
             db.session.commit()
             flash('Task added!', category='success')
     return render_template("tasks.html", user=current_user)
+
+@auth.route('/weather-page')
+def weather():
+    return render_template("weather.html", user=current_user)

@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block title %}Weather{% endblock %} {% block
+content %}
+<h2 class="mt-4" align="center">Weather Dashboard</h2>
+<form id="weather-form">
+  <input
+    type="text"
+    id="city"
+    class="form-control"
+    placeholder="Enter city name"
+  />
+  <br />
+  <div align="center">
+    <button type="button" class="btn btn-primary" onclick="getWeather()">
+      Get Weather
+    </button>
+  </div>
+</form>
+<br />
+<div id="weather-result" class="weather-result"></div>
+{% endblock %}

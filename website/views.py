@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from .models import Note, User, Image, Task
 from . import db
 import json
+import requests
 
 views = Blueprint('views', __name__)
 
@@ -67,3 +68,12 @@ def delete_task():
             db.session.delete(task)
             db.session.commit()
     return jsonify({})
+
+@views.route('/weather')
+def weather():
+    city = request.args.get('city')
+    api_key = '15765f72949b6c5d0b37ac5dd0d10f71'
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
+    response = requests.get(url)
+    data = response.json()
+    return jsonify(data)
